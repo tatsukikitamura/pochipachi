@@ -1,0 +1,162 @@
+---
+import { Image } from 'astro:assets';
+import Deco from './Deco.astro';
+import StoreBadges from './StoreBadges.astro';
+import logo from '../assets/logo-trimmed.png';
+import gameplay from '../assets/gameplay-2.png';
+import bear from '../assets/bear-lounge.png';
+---
+<section class="hero" id="top">
+  <!-- 背景のふわふわブロブ -->
+  <span class="blob hero-blob hero-blob--1" aria-hidden="true"></span>
+  <span class="blob hero-blob hero-blob--2" aria-hidden="true"></span>
+  <span class="blob hero-blob hero-blob--3" aria-hidden="true"></span>
+
+  <!-- 浮遊する装飾 -->
+  <Deco type="star" color="var(--banana)" size={46} class="anim-float hero-d hero-d--star1" style="--rot:-8deg" />
+  <Deco type="star" color="var(--pink)" size={30} class="anim-float-sm hero-d hero-d--star2" style="--rot:12deg" />
+  <Deco type="sparkle" color="var(--sky-deep)" size={34} class="anim-twinkle hero-d hero-d--sp1" />
+  <Deco type="sparkle" color="var(--banana)" size={22} class="anim-twinkle hero-d hero-d--sp2" />
+  <Deco type="cloud" color="#ffffff" size={72} class="anim-float hero-d hero-d--cloud1" outline={false} />
+  <Deco type="cloud" color="#ffffff" size={52} class="anim-float-sm hero-d hero-d--cloud2" outline={false} />
+  <Deco type="banana" color="var(--banana)" size={40} class="anim-float hero-d hero-d--banana" style="--rot:18deg" />
+  <Deco type="heart" color="var(--pink-soft)" size={26} class="anim-float-sm hero-d hero-d--heart" />
+
+  <div class="container hero-inner">
+    <div class="hero-copy">
+      <Image src={logo} alt="ぽちぱちパニック" class="hero-logo reveal" loading="eager" />
+      <span class="eyebrow reveal" data-delay="1">
+        <Deco type="star" color="var(--banana)" size={16} /> 毎日のちょこっと癒しパズル
+      </span>
+      <h1 class="hero-title reveal" data-delay="1">
+        色を置くだけ、<br /><span class="accent">かんたん</span>完成。
+      </h1>
+      <p class="hero-lead reveal" data-delay="2">
+        ぽちぽち、数字のマスをタップ。気づけば夢中、気づけば、ポイント。<br class="pc-only" />
+        可愛い白くまと過ごす、ほっと癒しの時間をはじめよう。
+      </p>
+      <div class="reveal" data-delay="3">
+        <StoreBadges align="start" />
+      </div>
+      <p class="hero-meta reveal" data-delay="4">
+        <span class="meta-pill">基本プレイ無料</span>
+        <span class="meta-pill">すきま時間にぴったり</span>
+      </p>
+    </div>
+
+    <div class="hero-visual reveal" data-delay="2">
+      <div class="phone anim-bob">
+        <div class="phone__screen">
+          <Image src={gameplay} alt="ぽちぱちパニックのプレイ画面。数字のマスに色を置いてイラストを完成させる" loading="eager" />
+        </div>
+      </div>
+      <Image src={bear} alt="" class="hero-bear" aria-hidden="true" />
+      <Deco type="star" color="var(--pink)" size={26} class="anim-twinkle hero-d hero-d--star3" />
+      <Deco type="sparkle" color="var(--banana)" size={28} class="anim-twinkle hero-d hero-d--sp3" />
+    </div>
+  </div>
+
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    padding-top: clamp(40px, 7vw, 80px);
+    padding-bottom: clamp(80px, 11vw, 140px);
+    overflow: clip;
+  }
+
+  .hero-inner {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    align-items: center;
+    gap: clamp(30px, 5vw, 64px);
+  }
+
+  .hero-logo {
+    width: min(380px, 78%);
+    height: auto;
+    margin-bottom: 18px;
+    filter: drop-shadow(0 12px 18px rgba(120, 130, 200, 0.25));
+  }
+
+  .hero-title {
+    font-size: clamp(2.1rem, 6.6vw, 3.5rem);
+    line-height: 1.3;
+    margin-top: 14px;
+    text-wrap: balance;
+  }
+  .hero-title .accent { color: var(--pink-deep); }
+
+  .hero-lead {
+    margin-top: 18px;
+    font-size: clamp(0.98rem, 2.7vw, 1.12rem);
+    color: var(--ink);
+    font-weight: 500;
+    max-width: 34ch;
+  }
+
+  .hero-copy > .reveal:nth-of-type(n + 4) { margin-top: 26px; }
+  .hero-meta { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
+  .meta-pill {
+    font-family: var(--font-display);
+    font-size: 0.82rem;
+    color: var(--sky-deep);
+    background: var(--sky-soft);
+    border: 2px solid var(--sky);
+    border-radius: var(--r-pill);
+    padding: 0.3em 0.9em;
+  }
+
+  /* ビジュアル（スマホモック＋くま） */
+  .hero-visual {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .hero-bear {
+    position: absolute;
+    width: clamp(150px, 24vw, 230px);
+    height: auto;
+    bottom: -6%;
+    left: -6%;
+    transform: rotate(-4deg);
+    filter: drop-shadow(0 14px 18px rgba(120, 130, 200, 0.28));
+    animation: floaty-sm 6s ease-in-out infinite;
+  }
+
+  /* ブロブ配置 */
+  .hero-blob { z-index: 0; }
+  .hero-blob--1 { width: 420px; height: 420px; background: var(--pink-soft); top: -80px; left: -120px; }
+  .hero-blob--2 { width: 360px; height: 360px; background: var(--sky-soft); top: 40px; right: -100px; opacity: 0.7; }
+  .hero-blob--3 { width: 300px; height: 300px; background: var(--banana-soft); bottom: 0; left: 30%; opacity: 0.5; }
+
+  /* 装飾の配置 */
+  .hero-d { position: absolute; z-index: 3; }
+  .hero-d--star1 { top: 8%; left: 46%; }
+  .hero-d--star2 { top: 26%; left: 4%; }
+  .hero-d--sp1 { top: 60%; left: 40%; }
+  .hero-d--sp2 { top: 14%; left: 30%; }
+  .hero-d--cloud1 { top: 4%; right: 18%; opacity: 0.9; }
+  .hero-d--cloud2 { bottom: 22%; left: 8%; opacity: 0.85; }
+  .hero-d--banana { top: 70%; right: 6%; }
+  .hero-d--heart { top: 40%; right: 26%; }
+  .hero-d--star3 { top: -4%; right: 8%; }
+  .hero-d--sp3 { bottom: 6%; right: -2%; }
+
+  .pc-only { display: inline; }
+
+  @media (max-width: 860px) {
+    .hero-inner { grid-template-columns: 1fr; text-align: center; }
+    .hero-copy { display: flex; flex-direction: column; align-items: center; order: 2; }
+    .hero-visual { order: 1; margin-bottom: 8px; }
+    .hero-logo { width: min(340px, 84%); }
+    .hero-lead { max-width: 40ch; }
+    .hero-meta { justify-content: center; }
+    .pc-only { display: none; }
+    .hero-d--star2, .hero-d--sp2, .hero-d--heart { display: none; }
+  }
+</style>

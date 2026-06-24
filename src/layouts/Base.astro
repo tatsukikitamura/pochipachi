@@ -1,0 +1,95 @@
+---
+import '../styles/global.css';
+
+export interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = 'ぽちぱちパニック｜ぽちぽち色を置くだけ、かんたん完成の癒しパズル',
+  description =
+    '数字のマスをぽちぱちタップして色を置くだけ。気づけば夢中、気づけばポイント！可愛い白くまと遊ぶ、毎日のちょこっと癒しパズル「ぽちぱちパニック」。',
+} = Astro.props;
+
+// GitHub Pages の base を尊重したパス生成
+const base = import.meta.env.BASE_URL;
+const asset = (p: string) => `${base.replace(/\/$/, '')}/${p.replace(/^\//, '')}`;
+const ogImage = Astro.site ? new URL(asset('og.jpg'), Astro.site).toString() : asset('og.jpg');
+const canonical = Astro.site ? new URL(base, Astro.site).toString() : undefined;
+---
+
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    {canonical && <link rel="canonical" href={canonical} />}
+
+    <!-- favicon -->
+    <link rel="icon" type="image/svg+xml" href={asset('favicon.svg')} />
+    <meta name="theme-color" content="#8fd3f4" />
+
+    <!-- OGP / Twitter -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+    {canonical && <meta property="og:url" content={canonical} />}
+    <meta property="og:site_name" content="ぽちぱちパニック" />
+    <meta property="og:locale" content="ja_JP" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <!-- fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700;800&family=Mochiy+Pop+One&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="page-wash" aria-hidden="true"></div>
+    <slot />
+
+    <style>
+      /* ページ全体にかかる、ごく淡い夢かわグラデの背景 */
+      .page-wash {
+        position: fixed;
+        inset: 0;
+        z-index: -1;
+        background:
+          radial-gradient(1100px 700px at 12% -8%, var(--bg-pink), transparent 60%),
+          radial-gradient(1000px 760px at 92% 4%, var(--sky-soft), transparent 58%),
+          radial-gradient(900px 720px at 50% 108%, var(--lavender-soft), transparent 60%),
+          var(--cream);
+      }
+    </style>
+
+    <!-- スクロール出現アニメ（軽量・IntersectionObserver） -->
+    <script>
+      const els = document.querySelectorAll('.reveal');
+      if ('IntersectionObserver' in window && els.length) {
+        const io = new IntersectionObserver(
+          (entries) => {
+            for (const e of entries) {
+              if (e.isIntersecting) {
+                e.target.classList.add('is-visible');
+                io.unobserve(e.target);
+              }
+            }
+          },
+          { threshold: 0.12, rootMargin: '0px 0px -8% 0px' },
+        );
+        els.forEach((el) => io.observe(el));
+      } else {
+        els.forEach((el) => el.classList.add('is-visible'));
+      }
+    </script>
+  </body>
+</html>

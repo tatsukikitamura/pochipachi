@@ -1,0 +1,134 @@
+---
+import { Image } from 'astro:assets';
+import Deco from './Deco.astro';
+import point from '../assets/icons/reward-point.png';
+import golden from '../assets/icons/reward-golden.png';
+import bearYawn from '../assets/bear-yawn.png';
+
+const pixels = [
+  'var(--sky)', 'var(--banana-soft)', 'var(--pink-soft)', 'var(--mint)',
+  'var(--banana)', 'var(--pink)', 'var(--sky-soft)', 'var(--lavender)',
+  'var(--pink-soft)', 'var(--mint-soft)', 'var(--banana)', 'var(--sky)',
+];
+---
+<section class="section" id="features">
+  <Deco type="star" color="var(--pink-soft)" size={40} class="anim-float feat-d feat-d--1" style="--rot:-10deg" />
+  <Deco type="sparkle" color="var(--sky)" size={30} class="anim-twinkle feat-d feat-d--2" />
+  <Deco type="banana" color="var(--banana)" size={34} class="anim-float-sm feat-d feat-d--3" style="--rot:20deg" />
+
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow"><Deco type="heart" color="var(--pink)" size={16} /> 特徴</span>
+      <h2 class="section-title">ぽちぱちが<span class="accent">愛される</span>4つのワケ</h2>
+      <p class="section-lead">むずかしいルールはなし。だれでもすぐに夢中になれる仕掛けがいっぱい。</p>
+    </div>
+
+    <ul class="feature-grid">
+      <li class="card card--outline feature reveal" data-delay="1">
+        <div class="feature-icon feature-icon--pink">
+          <div class="pixel-grid" aria-hidden="true">
+            {pixels.map((c) => <span style={`background:${c}`}></span>)}
+          </div>
+        </div>
+        <h3 class="feature-title">色を置くだけ<br />かんたん完成</h3>
+        <p class="feature-desc">数字に合う色をぽちぽち置いていくだけ。むずかしい操作はいりません。</p>
+      </li>
+
+      <li class="card card--outline feature reveal" data-delay="2">
+        <div class="feature-icon feature-icon--sky">
+          <Image src={point} alt="" class="feature-img" />
+        </div>
+        <h3 class="feature-title">気づけば夢中<br />気づけばポイント</h3>
+        <p class="feature-desc">遊んで進めるだけでポイントがたまる。つい時間を忘れちゃう楽しさ。</p>
+      </li>
+
+      <li class="card card--outline feature reveal" data-delay="3">
+        <div class="feature-icon feature-icon--mint">
+          <Image src={bearYawn} alt="" class="feature-img feature-img--bear" />
+        </div>
+        <h3 class="feature-title">毎日の<br />ちょこっと癒し</h3>
+        <p class="feature-desc">完成するのは可愛い白くまのイラスト。眺めているだけでほっこり。</p>
+      </li>
+
+      <li class="card card--outline feature reveal" data-delay="4">
+        <div class="feature-icon feature-icon--banana">
+          <Image src={golden} alt="" class="feature-img" />
+        </div>
+        <h3 class="feature-title">いろんな抽選に<br />応募しよう♪</h3>
+        <p class="feature-desc">たまったポイントは、わくわくの抽選に応募できる。お楽しみがいっぱい。</p>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<style>
+  .feature-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: clamp(16px, 2.4vw, 26px);
+  }
+
+  .feature {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 14px;
+    transition: transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.22s ease;
+  }
+  .feature:hover { transform: translateY(-8px) rotate(-0.6deg); box-shadow: var(--shadow-soft); }
+
+  .feature-icon {
+    width: 96px;
+    height: 96px;
+    border-radius: 26px;
+    display: grid;
+    place-items: center;
+    border: 3px solid var(--navy);
+    box-shadow: 0 10px 0 -2px rgba(32, 32, 79, 0.08);
+  }
+  .feature-icon--pink { background: var(--pink-soft); }
+  .feature-icon--sky { background: var(--sky-soft); }
+  .feature-icon--mint { background: var(--mint-soft); }
+  .feature-icon--banana { background: var(--banana-soft); }
+
+  .feature-img { width: 62px; height: 62px; object-fit: contain; }
+  .feature-img--bear { width: 78px; height: 78px; }
+
+  .pixel-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 3px;
+    width: 60px;
+    height: 60px;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .pixel-grid span { border-radius: 3px; }
+
+  .feature-title {
+    font-size: 1.12rem;
+    line-height: 1.45;
+  }
+  .feature-desc {
+    font-size: 0.9rem;
+    color: var(--ink-soft);
+    font-weight: 500;
+    line-height: 1.7;
+  }
+
+  .feat-d { position: absolute; z-index: 1; }
+  .feat-d--1 { top: 6%; left: 3%; }
+  .feat-d--2 { top: 16%; right: 5%; }
+  .feat-d--3 { bottom: 8%; left: 7%; }
+
+  @media (max-width: 920px) {
+    .feature-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 480px) {
+    .feature-grid { grid-template-columns: 1fr; }
+    .feature { flex-direction: row; text-align: left; align-items: center; gap: 18px; }
+    .feature-icon { flex: none; width: 80px; height: 80px; }
+    .feature-title br { display: none; }
+  }
+</style>

@@ -1,0 +1,114 @@
+---
+import { Image } from 'astro:assets';
+import Deco from './Deco.astro';
+import logo from '../assets/logo-trimmed.png';
+
+const links = [
+  { href: '#features', label: '特徴' },
+  { href: '#how', label: '遊び方' },
+  { href: '#gallery', label: 'ギャラリー' },
+  { href: '#rewards', label: 'ごほうび' },
+  { href: '#faq', label: 'FAQ' },
+];
+const year = 2026;
+---
+<div class="wave footer-wave" aria-hidden="true">
+  <svg viewBox="0 0 1440 90" preserveAspectRatio="none">
+    <path d="M0 50 C240 14 480 14 720 44 C960 74 1200 74 1440 44 L1440 90 L0 90 Z" fill="var(--navy)" />
+  </svg>
+</div>
+
+<footer class="site-footer">
+  <Deco type="star" color="rgba(255,255,255,.25)" size={28} class="anim-float ft-d ft-d--1" outline={false} />
+  <Deco type="sparkle" color="rgba(255,216,77,.6)" size={24} class="anim-twinkle ft-d ft-d--2" outline={false} />
+  <Deco type="star" color="rgba(255,255,255,.2)" size={20} class="anim-float-sm ft-d ft-d--3" outline={false} />
+
+  <div class="container footer-inner">
+    <div class="footer-brand">
+      <Image src={logo} alt="ぽちぱちパニック" class="footer-logo" />
+      <p class="footer-tag">毎日のちょこっと癒しパズル</p>
+    </div>
+
+    <nav class="footer-nav" aria-label="フッターナビゲーション">
+      <ul>
+        {links.map((l) => (
+          <li><a href={l.href}>{l.label}</a></li>
+        ))}
+      </ul>
+    </nav>
+  </div>
+
+  <div class="container footer-bottom">
+    <p class="footer-note">※掲載の画像・内容は開発中のものです。仕様は変更になる場合があります。</p>
+    <p class="footer-copy">&copy; {year} ぽちぱちパニック</p>
+  </div>
+</footer>
+
+<style>
+  .footer-wave { line-height: 0; margin-bottom: -1px; }
+  .footer-wave svg { height: clamp(46px, 7vw, 84px); }
+
+  .site-footer {
+    position: relative;
+    background: var(--navy);
+    color: rgba(255, 255, 255, 0.86);
+    padding-block: clamp(28px, 5vw, 48px) 26px;
+    overflow: clip;
+  }
+
+  .footer-inner {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 26px;
+    padding-bottom: 26px;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.14);
+  }
+
+  .footer-logo { height: 52px; width: auto; }
+  .footer-tag {
+    margin-top: 12px;
+    font-family: var(--font-display);
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.78);
+  }
+
+  .footer-nav ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 22px;
+  }
+  .footer-nav a {
+    font-family: var(--font-display);
+    font-size: 0.92rem;
+    color: rgba(255, 255, 255, 0.82);
+    transition: color 0.18s ease;
+  }
+  .footer-nav a:hover { color: var(--banana); }
+
+  .footer-bottom {
+    position: relative;
+    z-index: 2;
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+  }
+  .footer-note { font-size: 0.76rem; color: rgba(255, 255, 255, 0.55); font-weight: 500; }
+  .footer-copy { font-size: 0.82rem; color: rgba(255, 255, 255, 0.7); font-family: var(--font-display); }
+
+  .ft-d { position: absolute; z-index: 1; }
+  .ft-d--1 { top: 24%; left: 10%; }
+  .ft-d--2 { top: 40%; right: 14%; }
+  .ft-d--3 { bottom: 28%; left: 40%; }
+
+  @media (max-width: 600px) {
+    .footer-inner { flex-direction: column; align-items: flex-start; }
+    .footer-bottom { flex-direction: column; align-items: flex-start; }
+  }
+</style>

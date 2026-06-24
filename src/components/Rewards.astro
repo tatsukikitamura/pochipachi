@@ -1,0 +1,164 @@
+---
+import { Image } from 'astro:assets';
+import Deco from './Deco.astro';
+import rPoint from '../assets/icons/reward-point.png';
+import rCoin from '../assets/icons/reward-coin.png';
+import rGolden from '../assets/icons/reward-golden.png';
+import fBanana from '../assets/icons/fruit-banana.png';
+import iHammer from '../assets/icons/item-hammer.png';
+import iArrow from '../assets/icons/item-arrow.png';
+import iTank from '../assets/icons/item-tank.png';
+import iDisco from '../assets/icons/item-disco.png';
+
+const rewards = [
+  { img: rPoint, name: 'ポイント', desc: 'ためて抽選に応募！', tone: 'pink' },
+  { img: rCoin, name: 'コイン', desc: 'あつめてアイテムと交換', tone: 'sky' },
+  { img: fBanana, name: 'フルーツ', desc: '見つけるとちょっと得', tone: 'banana' },
+  { img: rGolden, name: 'ゴールド', desc: 'レアなおたのしみ', tone: 'lavender' },
+];
+
+const items = [
+  { img: iHammer, name: 'ハンマー', desc: 'ねらって壊す' },
+  { img: iArrow, name: 'やじるし', desc: '一列まとめて' },
+  { img: iTank, name: '大砲', desc: 'ドカンと一掃' },
+  { img: iDisco, name: 'ミラーボール', desc: 'カラフルに' },
+];
+---
+<section class="section rewards" id="rewards">
+  <Deco type="star" color="var(--pink)" size={36} class="anim-float rw-d rw-d--1" style="--rot:-12deg" />
+  <Deco type="banana" color="var(--banana)" size={38} class="anim-float-sm rw-d rw-d--2" style="--rot:16deg" />
+
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow"><Deco type="banana" color="var(--banana)" size={16} /> ごほうび</span>
+      <h2 class="section-title">遊ぶほど、<span class="accent">うれしい</span>ごほうび</h2>
+      <p class="section-lead">ぽちぽち進めるだけで、ポイントもコインもどんどんたまる。お楽しみがいっぱいです。</p>
+    </div>
+
+    <div class="reward-panel reveal">
+      <ul class="reward-grid">
+        {rewards.map((r) => (
+          <li class="reward">
+            <div class={`reward-icon tone-${r.tone}`}>
+              <Image src={r.img} alt="" class="reward-img" />
+            </div>
+            <p class="reward-name">{r.name}</p>
+            <p class="reward-desc">{r.desc}</p>
+          </li>
+        ))}
+      </ul>
+
+      <div class="reward-div">
+        <span></span>
+        <em><Deco type="sparkle" color="var(--banana)" size={18} /> おたすけアイテム <Deco type="sparkle" color="var(--banana)" size={18} /></em>
+        <span></span>
+      </div>
+
+      <ul class="item-grid">
+        {items.map((it) => (
+          <li class="powerup">
+            <div class="powerup-icon">
+              <Image src={it.img} alt="" />
+            </div>
+            <p class="powerup-name">{it.name}</p>
+            <p class="powerup-desc">{it.desc}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</section>
+
+<style>
+  .reward-panel {
+    background: linear-gradient(180deg, #fffaf0, #fff);
+    border: 3px solid var(--navy);
+    border-radius: var(--r-xl);
+    box-shadow: var(--shadow-soft);
+    padding: clamp(26px, 4.5vw, 48px);
+  }
+
+  .reward-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: clamp(14px, 2.4vw, 26px);
+  }
+  .reward {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 8px;
+  }
+  .reward-icon {
+    width: 88px;
+    height: 88px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    border: 3px solid var(--navy);
+    transition: transform 0.2s ease;
+  }
+  .reward:hover .reward-icon { transform: translateY(-5px) rotate(-4deg); }
+  .reward-icon.tone-pink { background: var(--pink-soft); }
+  .reward-icon.tone-sky { background: var(--sky-soft); }
+  .reward-icon.tone-banana { background: var(--banana-soft); }
+  .reward-icon.tone-lavender { background: var(--lavender-soft); }
+  .reward-img { width: 56px; height: 56px; object-fit: contain; }
+  .reward-name { font-family: var(--font-display); font-size: 1.05rem; color: var(--navy); }
+  .reward-desc { font-size: 0.84rem; color: var(--ink-soft); font-weight: 500; }
+
+  .reward-div {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-block: clamp(26px, 4vw, 38px);
+  }
+  .reward-div span { flex: 1; height: 2.5px; background: repeating-linear-gradient(90deg, var(--pink-soft) 0 10px, transparent 10px 18px); border-radius: 2px; }
+  .reward-div em {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-display);
+    font-style: normal;
+    font-size: clamp(0.95rem, 2.6vw, 1.15rem);
+    color: var(--navy);
+    white-space: nowrap;
+  }
+
+  .item-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: clamp(14px, 2.4vw, 24px);
+  }
+  .powerup {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 6px;
+    background: var(--bg-blue);
+    border: 2.5px solid var(--sky);
+    border-radius: var(--r-md);
+    padding: 16px 10px;
+    transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .powerup:hover { transform: translateY(-6px) rotate(1.5deg); }
+  .powerup-icon { width: 72px; height: 72px; display: grid; place-items: center; }
+  .powerup-icon img { width: 100%; height: 100%; object-fit: contain; }
+  .powerup-name { font-family: var(--font-display); font-size: 0.98rem; color: var(--navy); }
+  .powerup-desc { font-size: 0.8rem; color: var(--ink-soft); font-weight: 500; }
+
+  .rw-d { position: absolute; z-index: 1; }
+  .rw-d--1 { top: 10%; left: 3%; }
+  .rw-d--2 { bottom: 8%; right: 4%; }
+
+  @media (max-width: 720px) {
+    .reward-grid { grid-template-columns: repeat(2, 1fr); gap: 22px; }
+    .item-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 400px) {
+    .reward-grid { grid-template-columns: repeat(2, 1fr); }
+    .item-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>

@@ -1,0 +1,84 @@
+---
+import { Image } from 'astro:assets';
+import Deco from './Deco.astro';
+import StoreBadges from './StoreBadges.astro';
+import bear from '../assets/bear-lounge.png';
+---
+<section class="section--tight cta-section" id="download">
+  <div class="container">
+    <div class="cta-panel reveal">
+      <Deco type="star" color="#fff" size={40} class="anim-float cta-d cta-d--1" style="--rot:-10deg" outline={false} />
+      <Deco type="sparkle" color="var(--banana)" size={30} class="anim-twinkle cta-d cta-d--2" />
+      <Deco type="star" color="var(--banana)" size={28} class="anim-float-sm cta-d cta-d--3" style="--rot:12deg" />
+      <Deco type="heart" color="#fff" size={26} class="anim-float cta-d cta-d--4" outline={false} />
+      <Deco type="cloud" color="#ffffff" size={64} class="anim-float-sm cta-d cta-d--5" outline={false} />
+
+      <div class="cta-content">
+        <h2 class="cta-title">さあ、ぽちぱち<br />はじめよう！</h2>
+        <p class="cta-sub">むずかしいことはなし。今日からあなたも、ぽちぱち仲間♪</p>
+        <StoreBadges align="start" class="cta-badges" />
+      </div>
+
+      <div class="cta-bear-wrap">
+        <Image src={bear} alt="" class="cta-bear" aria-hidden="true" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .cta-panel {
+    position: relative;
+    overflow: clip;
+    display: grid;
+    grid-template-columns: 1.3fr 0.7fr;
+    align-items: center;
+    gap: 20px;
+    background: linear-gradient(120deg, var(--sky) 0%, #b8a9ee 50%, var(--pink) 100%);
+    border: 3px solid var(--navy-strong);
+    border-radius: var(--r-xl);
+    box-shadow: var(--shadow-soft);
+    padding: clamp(30px, 5vw, 56px);
+  }
+
+  .cta-content { position: relative; z-index: 2; }
+  .cta-title {
+    color: #fff;
+    font-size: clamp(1.7rem, 5.4vw, 2.8rem);
+    line-height: 1.32;
+    text-shadow: 0 3px 0 rgba(32, 32, 79, 0.22);
+  }
+  .cta-sub {
+    color: #fff;
+    font-weight: 700;
+    margin-top: 14px;
+    margin-bottom: 24px;
+    font-size: clamp(0.95rem, 2.6vw, 1.1rem);
+    text-shadow: 0 1px 0 rgba(32, 32, 79, 0.18);
+  }
+
+  .cta-bear-wrap { position: relative; z-index: 2; display: flex; justify-content: center; }
+  .cta-bear {
+    width: min(240px, 50vw);
+    height: auto;
+    filter: drop-shadow(0 16px 18px rgba(40, 40, 90, 0.3));
+    animation: floaty 6s ease-in-out infinite;
+  }
+
+  .cta-d { position: absolute; z-index: 1; }
+  .cta-d--1 { top: 12%; left: 40%; }
+  .cta-d--2 { bottom: 16%; left: 6%; }
+  .cta-d--3 { top: 20%; left: 4%; }
+  .cta-d--4 { top: 60%; left: 46%; }
+  .cta-d--5 { top: 6%; right: 30%; opacity: 0.85; }
+
+  @media (max-width: 760px) {
+    .cta-panel { grid-template-columns: 1fr; text-align: center; }
+    .cta-content { order: 2; display: flex; flex-direction: column; align-items: center; }
+    .cta-bear-wrap { order: 1; }
+    .cta-bear { width: min(190px, 50vw); }
+    .cta-badges { align-items: center; }
+    :global(.cta-badges[data-align='start']) { align-items: center; }
+    :global(.cta-badges[data-align='start'] .badge-row) { justify-content: center; }
+  }
+</style>

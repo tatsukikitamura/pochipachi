@@ -1,0 +1,126 @@
+---
+import Deco from './Deco.astro';
+
+const faqs = [
+  {
+    q: '料金はかかりますか？',
+    a: '基本プレイは無料です。どなたでも気軽にお楽しみいただけます（アプリ内に広告が表示される場合があります）。',
+  },
+  {
+    q: 'どんな端末で遊べますか？',
+    a: 'iPhone・Android のスマートフォンに対応予定です。配信開始まで、もう少しお待ちください。',
+  },
+  {
+    q: 'むずかしいですか？',
+    a: 'ルールはとてもかんたん。数字に合う色をぽちぽち置いていくだけなので、パズルがはじめての方でも楽しめます。',
+  },
+  {
+    q: 'ポイントは何に使えますか？',
+    a: '遊んでためたポイントは、いろんな抽選への応募などに使えます。お楽しみをご用意してお待ちしています♪',
+  },
+  {
+    q: 'オフラインでも遊べますか？',
+    a: 'パズルはオフラインでも楽しめます。ただし、ポイントや抽選など一部の機能はインターネット接続が必要です。',
+  },
+  {
+    q: 'いつ配信されますか？',
+    a: '現在、配信に向けて開発中です。最新情報をお待ちいただけるとうれしいです！',
+  },
+];
+---
+<section class="section faq" id="faq">
+  <Deco type="sparkle" color="var(--banana)" size={28} class="anim-twinkle faq-d faq-d--1" />
+  <Deco type="star" color="var(--pink-soft)" size={34} class="anim-float faq-d faq-d--2" style="--rot:10deg" />
+
+  <div class="container container--narrow">
+    <div class="section-head reveal">
+      <span class="eyebrow"><Deco type="heart" color="var(--pink)" size={16} /> FAQ</span>
+      <h2 class="section-title">よくある<span class="accent">ご質問</span></h2>
+    </div>
+
+    <div class="faq-list">
+      {faqs.map((f, i) => (
+        <details class="faq-item reveal" data-delay={String((i % 3) + 1)}>
+          <summary class="faq-q">
+            <span>{f.q}</span>
+            <span class="faq-mark" aria-hidden="true"></span>
+          </summary>
+          <div class="faq-a"><p>{f.a}</p></div>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .container--narrow { max-width: 760px; }
+
+  .faq-list { display: flex; flex-direction: column; gap: 14px; }
+
+  .faq-item {
+    background: #fff;
+    border: 3px solid var(--navy);
+    border-radius: var(--r-md);
+    box-shadow: var(--shadow-card);
+    overflow: hidden;
+  }
+
+  .faq-q {
+    list-style: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    padding: clamp(16px, 2.6vw, 22px) clamp(18px, 3vw, 26px);
+    font-family: var(--font-display);
+    font-size: clamp(1rem, 2.8vw, 1.12rem);
+    color: var(--navy);
+  }
+  .faq-q::-webkit-details-marker { display: none; }
+
+  .faq-mark {
+    position: relative;
+    flex: none;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: var(--pink-soft);
+    border: 2.5px solid var(--navy);
+  }
+  .faq-mark::before,
+  .faq-mark::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 11px;
+    height: 2.6px;
+    background: var(--navy);
+    border-radius: 2px;
+    transform: translate(-50%, -50%);
+    transition: transform 0.25s ease;
+  }
+  .faq-mark::after { transform: translate(-50%, -50%) rotate(90deg); }
+  .faq-item[open] .faq-mark::after { transform: translate(-50%, -50%) rotate(0deg); }
+  .faq-item[open] .faq-mark { background: var(--banana-soft); }
+
+  .faq-a {
+    padding: 0 clamp(18px, 3vw, 26px) clamp(18px, 2.8vw, 24px);
+    color: var(--ink);
+    font-weight: 500;
+    line-height: 1.85;
+    font-size: 0.95rem;
+  }
+  .faq-item[open] .faq-a { animation: faq-open 0.3s ease; }
+  @keyframes faq-open {
+    from { opacity: 0; transform: translateY(-6px); }
+    to { opacity: 1; transform: none; }
+  }
+
+  .faq-q:hover { color: var(--pink-deep); }
+
+  .faq-d { position: absolute; z-index: 1; }
+  .faq-d--1 { top: 10%; right: 6%; }
+  .faq-d--2 { bottom: 12%; left: 4%; }
+</style>

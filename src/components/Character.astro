@@ -1,0 +1,105 @@
+---
+import { Image } from 'astro:assets';
+import Deco from './Deco.astro';
+import bearYawn from '../assets/bear-yawn.png';
+import bearPack from '../assets/bear-pack.png';
+import bearShopping from '../assets/bear-shopping.png';
+import bearLounge from '../assets/bear-lounge.png';
+
+const bears = [
+  { img: bearYawn, cap: 'ねむい朝に', tone: 'sky' },
+  { img: bearPack, cap: 'スキンケア中も', tone: 'pink' },
+  { img: bearShopping, cap: 'おでかけの合間に', tone: 'banana' },
+  { img: bearLounge, cap: 'ごろごろしながら', tone: 'mint' },
+];
+---
+<section class="section character" id="character">
+  <span class="blob char-blob" aria-hidden="true"></span>
+  <Deco type="heart" color="var(--pink)" size={30} class="anim-float-sm ch-d ch-d--1" />
+  <Deco type="star" color="var(--banana)" size={34} class="anim-float ch-d ch-d--2" style="--rot:-14deg" />
+  <Deco type="sparkle" color="var(--sky-deep)" size={24} class="anim-twinkle ch-d ch-d--3" />
+
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow"><Deco type="star" color="var(--pink)" size={16} /> キャラクター</span>
+      <h2 class="section-title">いつも一緒の、<span class="accent">白くま</span></h2>
+      <p class="section-lead">朝も夜も、おうちでもおでかけ先でも。すきま時間に、のんびり屋の白くまと一緒にぽちぱち。</p>
+    </div>
+
+    <ul class="bear-grid">
+      {bears.map((b, i) => (
+        <li class="bear-card reveal" data-delay={String(i + 1)}>
+          <div class={`bear-circle tone-${b.tone}`}>
+            <Image src={b.img} alt={`白くま（${b.cap}）`} class="bear-img" />
+          </div>
+          <span class="bear-cap">{b.cap}</span>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .character { position: relative; overflow: clip; }
+  .char-blob {
+    width: 540px;
+    height: 540px;
+    background: var(--pink-soft);
+    opacity: 0.4;
+    top: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .bear-grid {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: clamp(16px, 3vw, 30px);
+  }
+  .bear-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+  .bear-circle {
+    width: min(190px, 40vw);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    border: 3px solid var(--navy);
+    display: grid;
+    place-items: center;
+    box-shadow: var(--shadow-card);
+    overflow: hidden;
+    transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .bear-card:hover .bear-circle { transform: translateY(-8px) rotate(-3deg); }
+  .bear-circle.tone-sky { background: var(--sky-soft); }
+  .bear-circle.tone-pink { background: var(--pink-soft); }
+  .bear-circle.tone-banana { background: var(--banana-soft); }
+  .bear-circle.tone-mint { background: var(--mint-soft); }
+  .bear-img { width: 84%; height: 84%; object-fit: contain; }
+
+  .bear-cap {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    color: var(--navy);
+    background: #fff;
+    border: 2.5px solid var(--navy);
+    border-radius: var(--r-pill);
+    padding: 0.35em 1.1em;
+    box-shadow: var(--shadow-card);
+  }
+
+  .ch-d { position: absolute; z-index: 1; }
+  .ch-d--1 { top: 12%; left: 6%; }
+  .ch-d--2 { top: 18%; right: 5%; }
+  .ch-d--3 { bottom: 12%; left: 12%; }
+
+  @media (max-width: 760px) {
+    .bear-grid { grid-template-columns: repeat(2, 1fr); gap: 26px; max-width: 440px; margin-inline: auto; }
+    .bear-circle { width: min(180px, 38vw); }
+  }
+</style>

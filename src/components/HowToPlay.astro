@@ -1,0 +1,163 @@
+---
+import { Image } from 'astro:assets';
+import Deco from './Deco.astro';
+import shotPlay from '../assets/gameplay-1.png';
+import shotClear from '../assets/screen-clear.png';
+import shotList from '../assets/screen-puzzle-list.png';
+
+const steps = [
+  {
+    no: 1,
+    img: shotPlay,
+    alt: '数字のマスが並んだプレイ画面',
+    title: '数字のマスを\nぽちぽちタップ',
+    desc: 'マスに書かれた数字と同じ色をえらんで、ぽちぽちタップするだけ。むずかしいルールはありません。',
+  },
+  {
+    no: 2,
+    img: shotClear,
+    alt: 'パズルが完成して白くまのイラストが現れた画面',
+    title: '色を置くと、\n絵が完成！',
+    desc: 'ぜんぶ塗り終えると、可愛い白くまのイラストがふわっと完成。「できた！」のうれしさをどうぞ。',
+  },
+  {
+    no: 3,
+    img: shotList,
+    alt: 'たくさんのパズルとごほうびが並んだ一覧画面',
+    title: 'ポイントをためて\n抽選に応募',
+    desc: '遊ぶほどポイントがたまっていく。いろんな抽選に応募して、お楽しみを待ちましょう♪',
+  },
+];
+---
+<section class="how" id="how">
+  <div class="wave wave--top" aria-hidden="true">
+    <svg viewBox="0 0 1440 80" preserveAspectRatio="none">
+      <path d="M0 42 C240 82 480 82 720 50 C960 20 1200 20 1440 50 L1440 80 L0 80 Z" fill="#eaf4ff" />
+    </svg>
+  </div>
+
+  <div class="how-band">
+    <Deco type="cloud" color="#ffffff" size={70} class="anim-float how-d how-d--c1" outline={false} />
+    <Deco type="star" color="var(--banana)" size={36} class="anim-float-sm how-d how-d--s1" style="--rot:-12deg" />
+    <Deco type="sparkle" color="var(--pink)" size={28} class="anim-twinkle how-d how-d--s2" />
+
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow"><Deco type="star" color="var(--banana)" size={16} /> 遊び方</span>
+        <h2 class="section-title">あそびかたは、<span class="accent-sky">3ステップ</span></h2>
+        <p class="section-lead">はじめてでもだいじょうぶ。ぽちぽちするだけで、すぐに楽しめます。</p>
+      </div>
+
+      <ol class="steps">
+        {steps.map((s, i) => (
+          <li class="step reveal" data-delay={String(i + 1)}>
+            <div class="step-visual">
+              <div class="phone">
+                <div class="phone__screen">
+                  <Image src={s.img} alt={s.alt} />
+                </div>
+              </div>
+              <span class="step-no">{s.no}</span>
+            </div>
+            <h3 class="step-title">{s.title}</h3>
+            <p class="step-desc">{s.desc}</p>
+            {i < steps.length - 1 && (
+              <Deco type="sparkle" color="var(--pink)" size={30} class="anim-twinkle step-arrow" />
+            )}
+          </li>
+        ))}
+      </ol>
+    </div>
+  </div>
+
+  <div class="wave wave--bottom" aria-hidden="true">
+    <svg viewBox="0 0 1440 80" preserveAspectRatio="none">
+      <path d="M0 38 C240 0 480 0 720 32 C960 64 1200 64 1440 32 L1440 0 L0 0 Z" fill="#f1ecfc" />
+    </svg>
+  </div>
+</section>
+
+<style>
+  .how { position: relative; }
+
+  .wave { position: relative; line-height: 0; }
+  .wave--top { margin-bottom: -1px; }
+  .wave--top svg { height: clamp(40px, 6vw, 72px); }
+  .wave--bottom { margin-top: -1px; }
+  .wave--bottom svg { height: clamp(40px, 6vw, 72px); }
+
+  .how-band {
+    position: relative;
+    background: linear-gradient(180deg, #eaf4ff 0%, #eef1fd 60%, #f1ecfc 100%);
+    padding-block: clamp(40px, 6vw, 72px) clamp(48px, 7vw, 86px);
+    overflow: clip;
+  }
+
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(24px, 4vw, 40px);
+    counter-reset: step;
+  }
+
+  .step {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 16px;
+  }
+
+  .step-visual { position: relative; }
+  .step .phone { width: min(216px, 58vw); }
+
+  .step-no {
+    position: absolute;
+    top: -14px;
+    left: -14px;
+    z-index: 5;
+    width: 52px;
+    height: 52px;
+    display: grid;
+    place-items: center;
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    color: #fff;
+    background: var(--pink-deep);
+    border: 3px solid var(--navy-strong);
+    border-radius: 50%;
+    box-shadow: var(--shadow-pop);
+  }
+  .step:nth-child(2) .step-no { background: var(--sky-deep); box-shadow: var(--shadow-sky); }
+  .step:nth-child(3) .step-no { background: var(--banana); color: var(--navy); }
+
+  .step-title {
+    font-size: 1.25rem;
+    line-height: 1.5;
+    white-space: pre-line;
+  }
+  .step-desc {
+    font-size: 0.92rem;
+    color: var(--ink);
+    font-weight: 500;
+    max-width: 30ch;
+  }
+
+  .step-arrow {
+    position: absolute;
+    top: 90px;
+    right: clamp(-26px, -2.2vw, -18px);
+  }
+
+  .how-d { position: absolute; z-index: 1; }
+  .how-d--c1 { top: 12%; right: 6%; opacity: 0.9; }
+  .how-d--s1 { bottom: 14%; left: 4%; }
+  .how-d--s2 { top: 30%; left: 8%; }
+
+  @media (max-width: 820px) {
+    .steps { grid-template-columns: 1fr; gap: 40px; max-width: 420px; margin-inline: auto; }
+    .step-arrow { display: none; }
+    .step .phone { width: min(240px, 64vw); }
+  }
+</style>

@@ -1,0 +1,100 @@
+---
+import { Image } from 'astro:assets';
+import Deco from './Deco.astro';
+import sceneMorning from '../assets/scene-morning.png';
+import sceneCafe from '../assets/scene-cafe.png';
+import sceneCloud from '../assets/scene-cloud.png';
+import shotHard from '../assets/screen-puzzle-list-hard.png';
+import shotDetail from '../assets/screen-detail.png';
+import shotPlay from '../assets/gameplay-4.png';
+
+const items = [
+  { img: sceneMorning, cap: 'おはようの空', tone: 'pink', rot: '-1.6deg' },
+  { img: shotPlay, cap: 'ぽちぽち中…', tone: 'sky', rot: '1.4deg' },
+  { img: sceneCafe, cap: '雲の上のカフェ', tone: 'banana', rot: '1.2deg' },
+  { img: shotHard, cap: 'むずかしいのも', tone: 'mint', rot: '-1.4deg' },
+  { img: sceneCloud, cap: 'ゆうやけタイム', tone: 'lavender', rot: '1.6deg' },
+  { img: shotDetail, cap: 'あつめたごほうび', tone: 'pink', rot: '-1.2deg' },
+];
+---
+<section class="section gallery" id="gallery">
+  <Deco type="heart" color="var(--pink-soft)" size={34} class="anim-float-sm gal-d gal-d--1" />
+  <Deco type="star" color="var(--banana)" size={32} class="anim-float gal-d gal-d--2" style="--rot:14deg" />
+  <Deco type="sparkle" color="var(--sky-deep)" size={26} class="anim-twinkle gal-d gal-d--3" />
+
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow"><Deco type="sparkle" color="var(--sky-deep)" size={16} /> ギャラリー</span>
+      <h2 class="section-title">完成するのは、<span class="accent">ぜんぶ可愛い</span></h2>
+      <p class="section-lead">空の上のおさんぽ、まったりカフェタイム…。塗り終えるたびに、ほっこりするイラストが集まります。</p>
+    </div>
+
+    <div class="gallery-grid">
+      {items.map((it, i) => (
+        <figure class={`gallery-item tone-${it.tone} reveal`} data-delay={String((i % 4) + 1)} style={`--rot:${it.rot}`}>
+          <div class="gallery-frame">
+            <Image src={it.img} alt={it.cap} />
+          </div>
+          <figcaption class="gallery-cap">{it.cap}</figcaption>
+        </figure>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .gallery-grid {
+    columns: 3;
+    column-gap: clamp(16px, 2.4vw, 24px);
+  }
+
+  .gallery-item {
+    break-inside: avoid;
+    margin-bottom: clamp(16px, 2.4vw, 24px);
+    background: #fff;
+    padding: 10px 10px 0;
+    border: 3px solid var(--navy);
+    border-radius: var(--r-md);
+    box-shadow: var(--shadow-card);
+    transform: rotate(var(--rot, 0deg));
+    transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.25s ease;
+  }
+  .gallery-item:hover {
+    transform: rotate(0deg) translateY(-6px) scale(1.02);
+    box-shadow: var(--shadow-soft);
+    z-index: 2;
+    position: relative;
+  }
+
+  .gallery-frame {
+    border-radius: 14px;
+    overflow: hidden;
+    line-height: 0;
+  }
+  .gallery-frame img { width: 100%; height: auto; }
+
+  .gallery-cap {
+    font-family: var(--font-display);
+    font-size: 0.92rem;
+    text-align: center;
+    color: var(--navy);
+    padding: 10px 6px 12px;
+  }
+  .tone-pink .gallery-cap { color: var(--pink-deep); }
+  .tone-sky .gallery-cap { color: var(--sky-deep); }
+  .tone-banana .gallery-cap { color: var(--banana-deep); }
+  .tone-lavender .gallery-cap { color: #8b6fd6; }
+  .tone-mint .gallery-cap { color: #2faf86; }
+
+  .gal-d { position: absolute; z-index: 1; }
+  .gal-d--1 { top: 8%; right: 4%; }
+  .gal-d--2 { top: 40%; left: 2%; }
+  .gal-d--3 { bottom: 10%; right: 8%; }
+
+  @media (max-width: 860px) {
+    .gallery-grid { columns: 2; }
+  }
+  @media (max-width: 480px) {
+    .gallery-grid { columns: 1; max-width: 320px; margin-inline: auto; }
+  }
+</style>

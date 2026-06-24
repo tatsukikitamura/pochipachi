@@ -1,0 +1,97 @@
+---
+import Deco from './Deco.astro';
+
+interface Props {
+  comingSoon?: boolean;
+  align?: 'center' | 'start';
+  class?: string;
+}
+const { comingSoon = true, align = 'center', class: cls = '' } = Astro.props;
+
+// ▼ ストア配信後は href を実際のURLに差し替えてください
+const APP_STORE_URL = '#';
+const GOOGLE_PLAY_URL = '#';
+---
+<div class={`store-badges ${cls}`} data-align={align}>
+  {comingSoon && (
+    <span class="coming-soon">
+      <Deco type="sparkle" color="var(--banana)" size={16} />
+      近日配信予定
+      <Deco type="sparkle" color="var(--banana)" size={16} />
+    </span>
+  )}
+  <div class="badge-row">
+    <a class="store-badge" href={APP_STORE_URL} aria-label="App Store でダウンロード（近日配信予定）">
+      <svg viewBox="0 0 24 24" class="badge-logo" aria-hidden="true" fill="currentColor">
+        <path d="M17.05 12.04c-.03-2.6 2.13-3.85 2.22-3.91-1.21-1.77-3.1-2.01-3.77-2.04-1.6-.16-3.13.94-3.94.94-.82 0-2.07-.92-3.41-.9-1.75.03-3.37 1.02-4.27 2.59-1.83 3.17-.47 7.85 1.31 10.42.87 1.26 1.9 2.66 3.26 2.61 1.31-.05 1.8-.85 3.39-.85 1.58 0 2.03.85 3.41.82 1.41-.02 2.3-1.28 3.16-2.54.99-1.45 1.4-2.86 1.42-2.94-.03-.01-2.73-1.05-2.76-4.15Z" />
+        <path d="M14.69 4.6c.72-.88 1.21-2.1 1.08-3.31-1.04.04-2.3.69-3.05 1.56-.67.78-1.25 2.02-1.09 3.21 1.16.09 2.34-.59 3.06-1.46Z" />
+      </svg>
+      <span class="badge-text"><small>Download on the</small><strong>App Store</strong></span>
+    </a>
+
+    <a class="store-badge" href={GOOGLE_PLAY_URL} aria-label="Google Play で手に入れよう（近日配信予定）">
+      <svg viewBox="0 0 24 24" class="badge-logo" aria-hidden="true">
+        <path d="M3.609 1.814 13.792 12 3.61 22.186a1.05 1.05 0 0 1-.61-.954V2.768c0-.4.234-.74.61-.954Z" fill="#00DDFF" />
+        <path d="m13.792 12 3.85-3.85 1.766.998c1.02.577 1.02 2.127 0 2.704l-1.766.998L13.792 12Z" fill="#FFBC00" />
+        <path d="M3.609 1.814c.29-.165.66-.165 1.02.041l11.013 6.295L13.792 12 3.609 1.814Z" fill="#FF3A44" />
+        <path d="M13.792 12 17.642 15.85 4.629 22.145c-.36.206-.73.206-1.02.041L13.792 12Z" fill="#00F076" />
+      </svg>
+      <span class="badge-text"><small>GET IT ON</small><strong>Google Play</strong></span>
+    </a>
+  </div>
+</div>
+
+<style>
+  .store-badges {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .store-badges[data-align='center'] { align-items: center; }
+  .store-badges[data-align='start'] { align-items: flex-start; }
+
+  .coming-soon {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-display);
+    font-size: 0.86rem;
+    color: var(--navy);
+    background: linear-gradient(120deg, var(--pink-soft), var(--banana-soft));
+    border: 2.5px solid var(--navy);
+    border-radius: var(--r-pill);
+    padding: 0.3em 1em;
+    box-shadow: var(--shadow-card);
+    transform: rotate(-1.5deg);
+  }
+
+  .badge-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: inherit;
+  }
+  .store-badges[data-align='center'] .badge-row { justify-content: center; }
+
+  .store-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0.62em 1.15em;
+    background: #1b1b34;
+    color: #fff;
+    border: 3px solid var(--navy-strong);
+    border-radius: 16px;
+    box-shadow: 0 12px 24px -14px rgba(40, 40, 80, 0.7);
+    transition: transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.18s ease;
+  }
+  .store-badge:hover {
+    transform: translateY(-3px) scale(1.03);
+    box-shadow: 0 18px 30px -14px rgba(40, 40, 80, 0.75);
+  }
+  .badge-logo { width: 26px; height: 26px; flex: none; }
+
+  .badge-text { display: flex; flex-direction: column; line-height: 1.15; text-align: left; }
+  .badge-text small { font-size: 0.62rem; opacity: 0.85; font-weight: 500; letter-spacing: 0.02em; }
+  .badge-text strong { font-size: 1.05rem; font-weight: 800; }
+</style>

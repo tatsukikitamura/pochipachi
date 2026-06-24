@@ -1,0 +1,330 @@
+/* =============================================================================
+   ぽちぱちパニック LP — グローバルスタイル / デザイントークン
+   夢かわパステル土台 × ロゴ準拠のビビッド差し色（空色 / バナナ / ピンク / ネイビー縁取り）
+   ========================================================================== */
+
+:root {
+  /* --- ブランドカラー（ロゴ・素材から抽出） --- */
+  --navy:        #2b2a6b;  /* 見出し・縁取りのベース */
+  --navy-strong: #20204f;  /* ステッカー調の強い縁取り */
+  --ink:         #5c5d8a;  /* 本文テキスト */
+  --ink-soft:    #8a8bb2;  /* 補助テキスト */
+
+  --sky:         #8fd3f4;
+  --sky-deep:    #4eb8ea;
+  --sky-soft:    #d8f0fd;
+
+  --banana:      #ffd84d;
+  --banana-deep: #f4c220;
+  --banana-soft: #fff0b4;
+
+  --pink:        #ff7bac;
+  --pink-deep:   #ff5e9c;  /* メインCTA */
+  --pink-soft:   #ffd6e6;
+
+  --mint:        #93e1c3;
+  --mint-soft:   #d6f5ea;
+
+  --lavender:      #c6b8f2;
+  --lavender-soft: #e9e2fb;
+
+  /* --- 背景 --- */
+  --cream:   #fffceb;
+  --bg-pink: #ffe9f1;
+  --bg-blue: #eef7ff;
+  --bg-lilac:#f4effd;
+  --white:   #ffffff;
+
+  /* --- 影 --- */
+  --shadow-soft: 0 22px 48px -22px rgba(120, 120, 190, .40), 0 8px 20px -12px rgba(120, 120, 190, .25);
+  --shadow-card: 0 18px 40px -20px rgba(255, 150, 190, .35), 0 6px 16px -10px rgba(140, 150, 210, .25);
+  --shadow-pop:  0 14px 30px -12px rgba(255, 110, 165, .45);
+  --shadow-sky:  0 14px 30px -12px rgba(80, 180, 235, .40);
+
+  /* --- 角丸 --- */
+  --r-sm:  14px;
+  --r-md:  22px;
+  --r-lg:  32px;
+  --r-xl:  44px;
+  --r-pill: 999px;
+
+  /* --- レイアウト --- */
+  --container: 1120px;
+  --gutter: clamp(18px, 5vw, 40px);
+
+  /* --- フォント --- */
+  --font-body:    "M PLUS Rounded 1c", system-ui, -apple-system, "Hiragino Maru Gothic ProN", "Segoe UI", sans-serif;
+  --font-display: "Mochiy Pop One", var(--font-body);
+}
+
+/* --- リセット（最小限） --- */
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+* { margin: 0; }
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  scroll-padding-top: 84px; /* 追従ヘッダー分 */
+}
+
+body {
+  font-family: var(--font-body);
+  font-weight: 500;
+  color: var(--ink);
+  line-height: 1.8;
+  background: var(--cream);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: clip;
+}
+
+img, picture, svg { display: block; max-width: 100%; }
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; cursor: pointer; border: none; background: none; }
+ul { list-style: none; padding: 0; }
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  color: var(--navy);
+  line-height: 1.35;
+  font-weight: 400; /* Mochiy Pop One は単一ウェイト */
+  letter-spacing: .01em;
+}
+
+/* =============================================================================
+   レイアウトユーティリティ
+   ========================================================================== */
+.container {
+  width: 100%;
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.section {
+  position: relative;
+  padding-block: clamp(64px, 9vw, 120px);
+}
+
+.section--tight { padding-block: clamp(48px, 6vw, 80px); }
+
+/* セクション見出し */
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: .4em;
+  font-family: var(--font-display);
+  font-size: clamp(.78rem, 2.4vw, .92rem);
+  color: var(--pink-deep);
+  background: var(--white);
+  border: 2.5px solid var(--navy);
+  border-radius: var(--r-pill);
+  padding: .35em 1.1em;
+  box-shadow: var(--shadow-card);
+  transform: rotate(-1.5deg);
+}
+
+.section-title {
+  font-size: clamp(1.7rem, 5.4vw, 2.9rem);
+  text-align: center;
+  margin-top: 18px;
+  text-wrap: balance;
+}
+
+.section-title .accent { color: var(--pink-deep); }
+.section-title .accent-sky { color: var(--sky-deep); }
+
+.section-lead {
+  text-align: center;
+  max-width: 40ch;
+  margin: 16px auto 0;
+  color: var(--ink-soft);
+  font-size: clamp(.95rem, 2.6vw, 1.05rem);
+  font-weight: 500;
+}
+
+.section-head { margin-bottom: clamp(36px, 5vw, 60px); text-align: center; }
+
+/* =============================================================================
+   ボタン / バッジ（ステッカー調＝ネイビー縁取り）
+   ========================================================================== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .55em;
+  font-family: var(--font-display);
+  font-size: 1rem;
+  line-height: 1;
+  padding: .95em 1.7em;
+  border-radius: var(--r-pill);
+  border: 3px solid var(--navy-strong);
+  color: var(--white);
+  background: var(--pink);
+  box-shadow: var(--shadow-pop);
+  transition: transform .18s cubic-bezier(.34, 1.56, .64, 1), box-shadow .18s ease, filter .18s ease;
+  will-change: transform;
+}
+.btn:hover { transform: translateY(-3px) scale(1.03); filter: saturate(1.05); }
+.btn:active { transform: translateY(0) scale(.98); }
+
+.btn--primary { background: var(--pink-deep); }
+.btn--sky     { background: var(--sky-deep); box-shadow: var(--shadow-sky); }
+.btn--banana  { background: var(--banana); color: var(--navy); }
+.btn--ghost   { background: var(--white); color: var(--navy); box-shadow: var(--shadow-card); }
+.btn--sm      { font-size: .85rem; padding: .7em 1.2em; border-width: 2.5px; }
+.btn--lg      { font-size: 1.15rem; padding: 1.05em 2.1em; }
+
+/* =============================================================================
+   カード
+   ========================================================================== */
+.card {
+  background: var(--white);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-card);
+  padding: clamp(22px, 3.5vw, 34px);
+}
+
+.card--outline { border: 3px solid var(--navy); }
+
+/* =============================================================================
+   背景の柔らかい円（ブロブ）
+   ========================================================================== */
+.blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(8px);
+  opacity: .55;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* =============================================================================
+   浮遊する装飾（星・ハート・きらきら）
+   ========================================================================== */
+/* 既定はインライン表示（見出しピル等で使用）。浮遊装飾は各セクションの
+   グループクラス側で position:absolute を指定して配置する。 */
+.deco {
+  display: inline-block;
+  vertical-align: middle;
+  line-height: 0;
+  flex: none;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* =============================================================================
+   波形セクション区切り
+   ========================================================================== */
+.wave {
+  display: block;
+  width: 100%;
+  height: clamp(40px, 7vw, 90px);
+  line-height: 0;
+}
+.wave svg { width: 100%; height: 100%; }
+
+/* =============================================================================
+   アニメーション
+   ========================================================================== */
+@keyframes floaty {
+  0%, 100% { transform: translateY(0) rotate(var(--rot, 0deg)); }
+  50%      { transform: translateY(-16px) rotate(var(--rot, 0deg)); }
+}
+@keyframes floaty-sm {
+  0%, 100% { transform: translateY(0) rotate(var(--rot, 0deg)); }
+  50%      { transform: translateY(-9px) rotate(var(--rot, 0deg)); }
+}
+@keyframes twinkle {
+  0%, 100% { transform: scale(1) rotate(var(--rot, 0deg)); opacity: 1; }
+  50%      { transform: scale(.78) rotate(var(--rot, 0deg)); opacity: .65; }
+}
+@keyframes bob {
+  0%, 100% { transform: translateY(0) rotate(-2deg); }
+  50%      { transform: translateY(-12px) rotate(2deg); }
+}
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+@keyframes pop-in {
+  0%   { transform: scale(.6); opacity: 0; }
+  70%  { transform: scale(1.08); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.anim-float    { animation: floaty 6s ease-in-out infinite; }
+.anim-float-sm { animation: floaty-sm 5s ease-in-out infinite; }
+.anim-twinkle  { animation: twinkle 3.5s ease-in-out infinite; }
+.anim-bob      { animation: bob 5.5s ease-in-out infinite; }
+
+/* スクロール出現 */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity .7s ease, transform .7s cubic-bezier(.22, 1, .36, 1);
+}
+.reveal.is-visible { opacity: 1; transform: none; }
+.reveal[data-delay="1"] { transition-delay: .08s; }
+.reveal[data-delay="2"] { transition-delay: .16s; }
+.reveal[data-delay="3"] { transition-delay: .24s; }
+.reveal[data-delay="4"] { transition-delay: .32s; }
+
+/* =============================================================================
+   スマホ実機モック
+   ========================================================================== */
+.phone {
+  position: relative;
+  width: min(280px, 72vw);
+  aspect-ratio: 1170 / 2532;
+  border-radius: 38px;
+  background: var(--navy-strong);
+  padding: 10px;
+  box-shadow: 0 30px 60px -24px rgba(60, 60, 120, .55), inset 0 0 0 2px rgba(255,255,255,.15);
+}
+.phone__screen {
+  width: 100%;
+  height: 100%;
+  border-radius: 28px;
+  overflow: hidden;
+  background: var(--white);
+}
+.phone__screen img { width: 100%; height: 100%; object-fit: cover; }
+.phone::before { /* ノッチ */
+  content: "";
+  position: absolute;
+  top: 16px; left: 50%;
+  transform: translateX(-50%);
+  width: 34%; height: 18px;
+  background: var(--navy-strong);
+  border-radius: 0 0 14px 14px;
+  z-index: 2;
+}
+
+/* =============================================================================
+   アクセシビリティ
+   ========================================================================== */
+:focus-visible {
+  outline: 3px solid var(--sky-deep);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px;
+  padding: 0; margin: -1px; overflow: hidden;
+  clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: .001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .001ms !important;
+  }
+  .reveal { opacity: 1; transform: none; }
+}
